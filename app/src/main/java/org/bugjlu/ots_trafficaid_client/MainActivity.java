@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cnm = (Button) findViewById(R.id.cnm);
         tv1 = (TextView) findViewById(R.id.tv1);
+        cnm = (Button)findViewById(R.id.cnm);
         cnm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
