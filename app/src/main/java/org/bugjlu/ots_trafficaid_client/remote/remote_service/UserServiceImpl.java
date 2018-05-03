@@ -1,7 +1,6 @@
 package org.bugjlu.ots_trafficaid_client.remote.remote_service;
 
 import org.bugjlu.ots_trafficaid_client.remote.remote_assist.RestHandler;
-import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

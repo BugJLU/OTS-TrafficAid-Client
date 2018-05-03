@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.bugjlu.ots_trafficaid_client.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp" />
+    <FrameLayout
+        android:id="@+id/fragment_view"
+        android:layout_width="match_parent"
+        android:background="@color/backgroundColor"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <Button
-        android:id="@+id/cnm"
-        android:layout_width="wrap_content"
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:alpha="0.6"
+        android:background="@android:color/darker_gray"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/tab_navigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
-        android:layout_marginTop="7dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv1"
-        android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/tv1" />
-</android.support.constraint.ConstraintLayout>
+        app:itemIconTint="#555555"
+        app:itemBackground="@android:color/white"
+        app:itemTextColor="#888888"
+        app:menu="@menu/navigation_tab"></android.support.design.widget.BottomNavigationView>
+
+</LinearLayout>

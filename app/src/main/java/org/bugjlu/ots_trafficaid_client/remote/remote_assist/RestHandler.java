@@ -1,7 +1,5 @@
 package org.bugjlu.ots_trafficaid_client.remote.remote_assist;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +11,7 @@ import java.util.Map;
 
 public class RestHandler {
     static RestTemplate restTemplate;
-    static String URL = "http://192.168.31.32:8080/";
+    static String URL = "http://211.159.147.229:8080/ots_server/";
     static {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
