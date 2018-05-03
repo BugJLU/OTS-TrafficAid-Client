@@ -3,6 +3,7 @@ package org.bugjlu.ots_trafficaid_client.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +14,16 @@ import com.hyphenate.chat.EMClient;
 
 import org.bugjlu.ots_trafficaid_client.BaseActivity;
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserServiceImpl;
 
 public class LoginActivity extends BaseActivity {
     EditText txUid,txPwd;
     Button bLog,bReg;
     private  final String TAG = "LOGIN";
     private final boolean DEBUG = true;
+    private static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +44,11 @@ public class LoginActivity extends BaseActivity {
 
 
         bLog.setOnClickListener(new View.OnClickListener() {
+            String uid,pwd;
             @Override
             public void onClick(View view) {
-                String uid = ((EditText) findViewById(R.id.l_userid)).getText().toString();
-                String pwd = ((EditText) findViewById(R.id.l_password)).getText().toString();
+               uid = ((EditText) findViewById(R.id.l_userid)).getText().toString();
+               pwd = ((EditText) findViewById(R.id.l_password)).getText().toString();
                 //Log.d(TAG, "登录聊天服务器成功！");
 
                 EMClient.getInstance().login(uid, pwd, new EMCallBack() {
@@ -50,8 +56,10 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess() {
                         EMClient.getInstance().groupManager().loadAllGroups();
                         EMClient.getInstance().chatManager().loadAllConversations();
-                        if(DEBUG)
-                            Log.d(TAG, "登录聊天服务器成功！");
+                        user = userService.getUser(uid);
+                        if(DEBUG) {
+                            Log.d(TAG, "登录聊天服务器成功！"+" user_name:"+user.getName());
+                        }
                     }
 
                     @Override

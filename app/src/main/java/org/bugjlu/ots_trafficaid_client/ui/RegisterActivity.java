@@ -16,8 +16,6 @@ import com.hyphenate.exceptions.HyphenateException;
 import org.bugjlu.ots_trafficaid_client.BaseActivity;
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
-import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserService;
-import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserServiceImpl;
 
 public class RegisterActivity extends BaseActivity{
     private Button bReg, bCancel;
@@ -25,7 +23,6 @@ public class RegisterActivity extends BaseActivity{
     private final String TAG = "REGISTER";
     private final boolean DEBUG = true;
 
-    private UserService userService = new UserServiceImpl();
     //private String uid, pwd, pre_name;
     @Override
     protected void onCreate(Bundle savedInstanceState){

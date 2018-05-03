@@ -6,7 +6,11 @@ import android.os.Bundle;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserServiceImpl;
+
 public class BaseActivity extends Activity {
+    protected  static UserService userService = new UserServiceImpl();
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
