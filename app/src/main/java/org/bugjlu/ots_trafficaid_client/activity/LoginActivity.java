@@ -1,13 +1,13 @@
-package org.bugjlu.ots_trafficaid_client.ui;
+package org.bugjlu.ots_trafficaid_client.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -15,8 +15,6 @@ import com.hyphenate.chat.EMClient;
 import org.bugjlu.ots_trafficaid_client.BaseActivity;
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
-import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserService;
-import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserServiceImpl;
 
 public class LoginActivity extends BaseActivity {
     EditText txUid,txPwd;
@@ -59,6 +57,7 @@ public class LoginActivity extends BaseActivity {
                         user = userService.getUser(uid);
                         if(DEBUG) {
                             Log.d(TAG, "登录聊天服务器成功！"+" user_name:"+user.getName());
+                            //Toast.makeText(this,)
                         }
                     }
 
@@ -66,6 +65,9 @@ public class LoginActivity extends BaseActivity {
                     public void onError(int code, String error) {
                         if(DEBUG)
                             Log.d(TAG, "登录聊天服务器失败！"+error+code);
+                        Looper.prepare();
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                        Looper.loop();
                     }
 
                     @Override

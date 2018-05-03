@@ -1,7 +1,6 @@
-package org.bugjlu.ots_trafficaid_client.ui;
+package org.bugjlu.ots_trafficaid_client.activity;
 
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
@@ -46,24 +45,26 @@ public class RegisterActivity extends BaseActivity{
                            if(DEBUG){
                                Log.d(TAG,"userid:"+uid+" "+"password:"+pwd);
                            }
+                           User user = new User();
+                           user.setType(0);
+                           user.setId(uid);
+                           user.setName(prefer_name);
+                           user.setIdCode(uid);
+
                            Looper.prepare();
                            try {
-                               EMClient.getInstance().createAccount(uid,pwd);
-                               if(DEBUG)
-                                   Log.d(TAG,"注册成功 !");
                                    //Toast.makeText(getApplicationContext(),"注册成功 !",Toast.LENGTH_SHORT);
-                               User user = new User();
-                               user.setType(0);
-                               user.setId(uid);
-                               user.setName(prefer_name);
-                               user.setIdCode(uid);
+
                                if(userService.addUser(user)){
-                                   if(DEBUG)
-                                       Log.d(TAG,"add to server successfully !");
+                                   EMClient.getInstance().createAccount(uid,pwd);
+                                   Toast.makeText(getApplicationContext(),"注册成功 !",Toast.LENGTH_SHORT).show();
+
                                }else{
                                    if(DEBUG){
                                        Log.d(TAG,"add to server unsuccessfully !");
                                    }
+                                   Toast.makeText(getApplicationContext(),"注册失败 !",Toast.LENGTH_SHORT).show();
+
                                }
 
                            } catch (HyphenateException e) {
@@ -77,6 +78,7 @@ public class RegisterActivity extends BaseActivity{
                                }else{
                                    Toast.makeText(getApplicationContext(), "注册失败: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                }
+
                            }
                            Looper.loop();
                        }
