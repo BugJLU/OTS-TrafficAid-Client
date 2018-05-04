@@ -31,15 +31,14 @@ public class AddResourceActivity extends AppCompatActivity {
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("addresource","begin");
+
                 String name = (String) editText.getText().toString();
                 Integer type = (int) spinner.getSelectedItemId();
-                Log.d("addresource","data complete");
+
                 Resource resource = new Resource();
                 resource.setName(name);
                 resource.setType(type);
-                Log.d("addresource","set complete");
-                Log.d("addresource",name);
+
 
 
                 if(name.length() == 0)
@@ -58,7 +57,6 @@ public class AddResourceActivity extends AppCompatActivity {
                     finish();
                     //进行传输，和服务端的通信操作
                 }
-                Log.d("addresource","finish complete");
             }
         });
     }
