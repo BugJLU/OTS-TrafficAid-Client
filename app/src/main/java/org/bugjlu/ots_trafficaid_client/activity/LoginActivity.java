@@ -83,7 +83,7 @@ public class LoginActivity extends BaseActivity {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("usr_name",uid);
                         editor.putString("password",pwd);
-                        editor.apply();
+                        editor.commit();
                         finish();
                     }
 

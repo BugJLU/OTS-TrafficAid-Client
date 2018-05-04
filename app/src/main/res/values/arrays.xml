@@ -5,4 +5,9 @@
         <item>药物</item>
         <item>工具</item>
     </string-array>
+
+    <string-array name="gender">
+        <item>男</item>
+        <item>女</item>>
+    </string-array>
 </resources>

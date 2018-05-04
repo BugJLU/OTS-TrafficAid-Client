@@ -1,5 +1,6 @@
 package org.bugjlu.ots_trafficaid_client.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import org.bugjlu.ots_trafficaid_client.MainActivity;
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.activity.CompleteInformationActivity;
+import org.bugjlu.ots_trafficaid_client.activity.MyCaseActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -24,14 +28,16 @@ public class SettingsFragment extends Fragment {
         information.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //开启完善信息的activity
+                Intent intent = new Intent(getActivity(), CompleteInformationActivity.class);
+                startActivity(intent);
             }
         });
 
         cases.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //开启查看病例的activity
+                Intent intent = new Intent(getActivity(), MyCaseActivity.class);
+                startActivity(intent);
             }
         });
 

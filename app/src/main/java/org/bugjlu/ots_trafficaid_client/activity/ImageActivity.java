@@ -23,6 +23,7 @@ public class ImageActivity extends AppCompatActivity {
         {
             case "kkk":
                 //view.setImageResource();
+                break;
         }
     }
 

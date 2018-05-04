@@ -5,34 +5,29 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.bugjlu.ots_trafficaid_client.R;
 
-public class CompleteInformationActivity extends AppCompatActivity {
+public class MyCaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complete_information);
-        setTitle("完善个人信息");
+        setContentView(R.layout.activity_my_case);
+        setTitle("我的病例");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView name = (TextView) findViewById(R.id.infor_name);
-        Spinner gender = (Spinner) findViewById(R.id.infor_gender);
-        Spinner emgcontact = (Spinner) findViewById(R.id.infor_emgcontact);
-        TextView idcode = (TextView) findViewById(R.id.infor_idcode);
-        TextView platenum = (TextView) findViewById(R.id.infor_platenum);
-        TextView cartype = (TextView) findViewById(R.id.infor_cartype);
-        TextView contactinfo = (TextView) findViewById(R.id.infor_contactinfo);
+
+        TextView mycase = (TextView) findViewById(R.id.infor_mycase);
         Button commit = (Button) findViewById(R.id.commit);
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //填写点击提交按钮后个人信息和服务器的更改操作
+                //病例保存后和服务器通信的内容
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
