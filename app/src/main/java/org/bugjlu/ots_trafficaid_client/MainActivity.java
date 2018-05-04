@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
 //            final String str = String.valueOf(contactTest());
 //            final String str = resourceTest();
 //            final String str = userTest();
-            final String str = aroundTest();
-
+//            final String str = aroundTest();
+            final String str = addUserTest();
+//            User u = userService.getUser("10086");
+//            final String str = u == null ? "null" : u.getName();
             tv1.post(new Runnable() {
                 @Override
                 public void run() {
@@ -57,6 +59,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public String  addUserTest() {
+        String str = "";
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            user.setId(String.valueOf(i));
+            user.setName("User"+i);
+            user.setType(0);
+            user.setGender(i%2);
+            user.setIdCode("IDCode: "+i);
+            user.setPlateNum("PlateNum: "+i);
+            user.setCarType("CarType: "+i);
+            user.setGeoX("0");
+            user.setGeoY("0");
+            Boolean b = userService.addUser(user);
+            str += b+"|";
+        }
+        return str;
+    }
+
     public double contactTest() {
         Contact contact = new Contact();
         contact.setSubjectId("2");
