@@ -1,6 +1,7 @@
 package org.bugjlu.ots_trafficaid_client.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -31,6 +32,25 @@ public class LoginActivity extends BaseActivity {
         txUid = (EditText)findViewById(R.id.l_userid);
         txPwd = (EditText)findViewById(R.id.l_password);
 
+        SharedPreferences preferences = getSharedPreferences("usr_infor",MODE_PRIVATE);
+        String uid = "";
+        String pwd = "";
+        String _uid = "";
+        String _pwd = "";
+
+        if(preferences!=null) {
+            uid = preferences.getString("usr_name", _uid);
+            pwd = preferences.getString("password", _pwd);
+        }else{
+            Log.d(TAG,"no user info. !");
+        }
+
+        if(!uid.equals(_uid))
+            txUid.setText(uid);
+        if(!pwd.equals(_pwd))
+            txPwd.setText(pwd);
+
+
         bReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +79,12 @@ public class LoginActivity extends BaseActivity {
                             Log.d(TAG, "登录聊天服务器成功！"+" user_name:"+user.getName());
                             //Toast.makeText(this,)
                         }
+                        SharedPreferences preferences = getSharedPreferences("usr_infor",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("usr_name",uid);
+                        editor.putString("password",pwd);
+                        editor.apply();
+                        finish();
                     }
 
                     @Override
