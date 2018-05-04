@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    //useLibrary 'org.apache.http.legacy'
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
@@ -33,19 +32,23 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support.constraint:constraint-layout:1.1.0'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.BUILD-SNAPSHOT'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.5'
 //    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     //compile 'org.apache.httpcomponents:httpcore:4.4.4'
 //    compile 'org.apache.httpcomponents:httpclient-osgi:4.5.1'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
+
+    compile 'com.android.support:design:25.3.1'
     testCompile 'junit:junit:4.12'
 //    testCompile 'org.apache.httpcomponents:httpclient:4.5.2'
+    //compile 'com.android.support.constraint:constraint-button_rectangle_red:1.1.0'
 //    compile 'com.google.android.gms:play-services-gcm:9.4.0'
     compile 'com.hyphenate:hyphenate-sdk:3.3.0'
 }

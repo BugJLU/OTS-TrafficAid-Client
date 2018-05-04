@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="60dp"
+    android:layout_marginBottom="60dp">
+
+    <CheckBox
+        android:id="@+id/etiology1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+
+        android:textSize="20dp"
+        android:text="骨折"/>
+    <CheckBox
+        android:id="@+id/etiology2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="大出血"/>
+    <CheckBox
+        android:id="@+id/etiology3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="病史引发"/>
+    <EditText
+        android:id="@+id/rescue_text_in"
+        android:layout_width="match_parent"
+        android:layout_weight="2"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:minLines="5"
+        android:gravity="top"
+        android:hint="在此输入详细信息"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+        <Button
+            android:id="@+id/rescue_voice_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="语音输入"/>
+
+        <Button
+            android:id="@+id/rescue_video_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="视频输入"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="20dp">
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="#fff"
+            android:background="@color/colorRed"
+            android:text="发送"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.CompleteInformationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@mipmap/personal_information"
+            android:padding="8dp"/>
+        <Button
+            android:id="@+id/complete_information"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:text="完善个人信息"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@mipmap/my_cases"
+            android:padding="5dp"/>
+        <Button
+            android:id="@+id/my_cases"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:text="我的病例"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@mipmap/professional_certification"
+            android:padding="5dp"/>
+        <Button
+            android:id="@+id/professional_certification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:text="职业认证"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            app:srcCompat="@mipmap/participate_in"
+            android:padding="5dp"/>
+        <Button
+            android:id="@+id/my_rescue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textColor="@android:color/darker_gray"
+            android:background="@android:color/white"
+            android:textAlignment="textStart"
+            android:paddingLeft="20dp"
+            android:text="我参与过的救援"/>
+    </LinearLayout>
+
+</LinearLayout>
