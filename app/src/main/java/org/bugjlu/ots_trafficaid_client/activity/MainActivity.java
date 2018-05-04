@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("救援");
 
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.tab_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
@@ -36,15 +37,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         {
             case R.id.tab_item1:
                 fragment = new RescueFragment();
+                setTitle("救援");
                 break;
             case R.id.tab_item2:
                 fragment = new SuppliesFragment();
+                setTitle("物资");
                 break;
             case R.id.tab_item3:
                 fragment = new TalksFragment();
+                setTitle("会话");
                 break;
             case R.id.tab_item4:
                 fragment = new SettingsFragment();
+                setTitle("设置");
                 break;
                 default:
                     break;

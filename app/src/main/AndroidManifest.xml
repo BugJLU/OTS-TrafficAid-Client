@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".activity.RescueActivity" />
         <activity android:name=".activity.MysupplyActivity" />
-        <activity android:name=".activity.AddResourceActivity"></activity>
+        <activity android:name=".activity.AddResourceActivity" />
+        <activity android:name=".activity.CompleteInformationActivity" />
+        <activity android:name=".activity.ImageActivity"></activity>
     </application>
 
 </manifest>
