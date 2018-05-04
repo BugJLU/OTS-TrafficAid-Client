@@ -1,5 +1,7 @@
 package org.bugjlu.ots_trafficaid_client.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("救援");
+
+        SharedPreferences preferences = getSharedPreferences("usr_infor",MODE_PRIVATE);
+        String uid = preferences.getString("usr_name","null");
+        String pass = preferences.getString("password", "null");
+        if(uid == "null")
+        {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
 
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.tab_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
