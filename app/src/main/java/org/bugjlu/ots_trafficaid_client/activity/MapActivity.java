@@ -56,6 +56,8 @@ public class MapActivity extends AppCompatActivity {
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map);
         //textView = (TextView) findViewById(R.id.my_positon);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("周围物资");
 
 
 
@@ -101,7 +103,12 @@ public class MapActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.allthing:
+                //点击之后显示全部物品
+                break;
             case R.id.medicine:
                 //点击药物之后做显示
 
@@ -122,6 +129,7 @@ public class MapActivity extends AppCompatActivity {
             case R.id.stopblood:
                 //点击止血之后做显示
                 break;
+
             case R.id.nothing:
                 baiduMap.clear();
                 break;
@@ -149,6 +157,8 @@ public class MapActivity extends AppCompatActivity {
         mapView.onDestroy();
         baiduMap.setMyLocationEnabled(false);
     }
+
+
 
     private void requestLocation()
     {
