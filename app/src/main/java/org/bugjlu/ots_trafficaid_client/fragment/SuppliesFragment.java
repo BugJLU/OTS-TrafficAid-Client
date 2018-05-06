@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.activity.MainActivity;
+import org.bugjlu.ots_trafficaid_client.activity.MapActivity;
 import org.bugjlu.ots_trafficaid_client.activity.MysupplyActivity;
 
 public class SuppliesFragment extends Fragment {
@@ -42,7 +43,8 @@ public class SuppliesFragment extends Fragment {
         others.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //进入百度地图LBS的界面activity
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
             }
         });
 

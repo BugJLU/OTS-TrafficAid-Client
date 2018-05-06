@@ -1,16 +1,11 @@
 package org.bugjlu.ots_trafficaid_client.adapter;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.bugjlu.ots_trafficaid_client.R;
@@ -40,7 +35,7 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itme_resource, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_resource, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.resourceView.setOnClickListener(new View.OnClickListener() {
             @Override

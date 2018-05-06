@@ -1,19 +1,30 @@
 package org.bugjlu.ots_trafficaid_client.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.fragment.RescueFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.SettingsFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.SuppliesFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.TalksFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -41,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         transaction.replace(R.id.fragment_view, new RescueFragment());
         transaction.commit();
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
