@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
 
 public class AddResourceActivity extends AppCompatActivity {
@@ -38,9 +39,7 @@ public class AddResourceActivity extends AppCompatActivity {
                 Resource resource = new Resource();
                 resource.setName(name);
                 resource.setType(type);
-
-
-
+                resource.setPossessorId(MyService.userName);
                 if(name.length() == 0)
                 {
                     AlertDialog dialog = new AlertDialog.Builder(v.getContext())
@@ -54,8 +53,9 @@ public class AddResourceActivity extends AppCompatActivity {
                             }).show();
                 }else
                 {
+                    MyService.resourceService.addResource(resource);
+                    MysupplyActivity.updateResources();
                     finish();
-                    //进行传输，和服务端的通信操作
                 }
             }
         });

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.adapter.ResourceAdapter;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class MysupplyActivity extends AppCompatActivity {
 
-    private List<Resource> resourceList = new ArrayList<>();
+    private static List<Resource> resourceList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,7 @@ public class MysupplyActivity extends AppCompatActivity {
     {
         for(int i = 0; i < 30; i++)
         {
-            ////以后要改成和服务端进行通信
-            Resource resource = new Resource();
-            resource.setName("测试" + i);
-            resourceList.add(resource);
+            resourceList = MyService.resourceService.getResourcesFrom(MyService.userName);
         }
 
     }
@@ -67,4 +65,10 @@ public class MysupplyActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static void updateResources()
+    {
+        resourceList = MyService.resourceService.getResourcesFrom(MyService.userName);
+    }
+
 }

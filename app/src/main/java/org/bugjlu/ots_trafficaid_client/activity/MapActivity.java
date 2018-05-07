@@ -37,6 +37,10 @@ import com.baidu.mapapi.model.LatLng;
 
 import org.bugjlu.ots_trafficaid_client.R;
 
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,33 +105,93 @@ public class MapActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.location);
+        List<OverlayOptions> list = new ArrayList<>();
+        List<User> users = MyService.userService.getUserAround(MyService.userName, 5);
         switch (item.getItemId())
         {
             case android.R.id.home:
                 finish();
                 return true;
             case R.id.allthing:
-                //点击之后显示全部物品
+                for (User user : users)
+                {
+                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+                    boolean have = false;
+                    for (Resource resource : resources)
+                    {
+                        LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+                        if (resource.getType() == 1)
+                        {
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+                        }
+                        else if (resource.getType() == 2)
+                        {
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
+                        }
+                        else if (resource.getType() == 3)
+                        {
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+                        }
+                    }
+                }
+                baiduMap.addOverlays(list);
                 break;
             case R.id.medicine:
                 //点击药物之后做显示
-
-                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.location);
-                List<OverlayOptions> list = new ArrayList<>();
-                LatLng point = new LatLng(39.963175, 116.400244);
-                list.add(new MarkerOptions().position(point).icon(bitmap));
-//                for ()
-//                {
-//                    LatLng point = new LatLng(39.963175, 116.400244);
-//                    list.add(new MarkerOptions().position(point).icon(bitmap));
-//                }
+                for (User user : users)
+                {
+                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+                    boolean have = false;
+                    for (Resource resource : resources)
+                    {
+                        if (resource.getType() == 2)
+                        {
+                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：药物" + "\n" + "名称：" + resource.getName()));
+                        }
+                    }
+                }
                 baiduMap.addOverlays(list);
                 break;
             case R.id.tool:
-                //点击tool之后做显示
+
+                for (User user : users)
+                {
+                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+                    boolean have = false;
+                    for (Resource resource : resources)
+                    {
+                        if (resource.getType() == 3)
+                        {
+                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
+                        }
+                    }
+                }
+                baiduMap.addOverlays(list);
                 break;
             case R.id.stopblood:
-                //点击止血之后做显示
+                for (User user : users)
+                {
+                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+                    boolean have = false;
+                    for (Resource resource : resources)
+                    {
+                        if (resource.getType() == 1)
+                        {
+                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+                        }
+                    }
+                }
+                baiduMap.addOverlays(list);
                 break;
 
             case R.id.nothing:
@@ -172,7 +236,7 @@ public class MapActivity extends AppCompatActivity {
             public boolean onMarkerClick(Marker marker) {
                 LatLng position = marker.getPosition();
                 TextView textView = new TextView(getApplicationContext());
-                textView.setText("shiyishi");
+                textView.setText(marker.getTitle());
                 textView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
                 InfoWindow infoWindow = new InfoWindow(textView,position, -100);
                 baiduMap.showInfoWindow(infoWindow);
@@ -197,6 +261,7 @@ public class MapActivity extends AppCompatActivity {
         option.setScanSpan(5000);
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setIsNeedAddress(true);
+        option.setCoorType("bd09ll");
         baiduMap.setMyLocationEnabled(true);
         locationClient.setLocOption(option);
         locationClient.start();
