@@ -123,7 +123,9 @@
         <!--<activity android:name=".chatuidemo.ui.PublicGroupsActivity" />-->
         <activity android:name=".chatuidemo.ui.ChatActivity" />
         <activity android:name=".chatuidemo.ui.GroupPickContactsActivity" />
+        <activity android:name=".chatuidemo.ui.GroupDetailsActivity" />
         <activity android:name=".chatuidemo.ui.AddContactActivity" />
+        <activity android:name=".chatuidemo.ui.UserProfileActivity" />
         <activity android:name=".activity.ContactActivity" />
     </application>
 

@@ -24,6 +24,11 @@ import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.DemoHelper;
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.Contact;
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.ContactService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_service.ContactServiceImpl;
+
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
@@ -40,6 +45,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 	private TextView tvUsername;
 	private ProgressDialog dialog;
 	private RelativeLayout rlNickName;
+	private TextView ctGroup;
+	private TextView ctIntimacy;
 	
 	
 	
@@ -58,6 +65,8 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 		tvNickName = (TextView) findViewById(R.id.user_nickname);
 		rlNickName = (RelativeLayout) findViewById(R.id.rl_nickname);
 		iconRightArrow = (ImageView) findViewById(R.id.ic_right_arrow);
+		ctGroup	= (TextView) findViewById(R.id.contact_group);
+		ctIntimacy = (TextView) findViewById(R.id.contact_intimacy);
 	}
 	
 	private void initListener() {
@@ -126,6 +135,9 @@ public class UserProfileActivity extends BaseActivity implements OnClickListener
 				        return;
 				    }
 					tvNickName.setText(user.getNick());
+					Contact contact = MyService.contactService.getContact(MyService.userName, user.getUsername());
+					ctGroup.setText(MyService.contactType.getName(contact.getGroupType()));
+					ctGroup.setText(contact.getIntimacy().toString());
 					if(!TextUtils.isEmpty(user.getAvatar())){
 						 Glide.with(UserProfileActivity.this).load(user.getAvatar()).placeholder(R.drawable.em_default_avatar).into(headAvatar);
 					}else{

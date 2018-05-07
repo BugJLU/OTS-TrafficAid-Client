@@ -14,7 +14,9 @@
 package org.bugjlu.ots_trafficaid_client.chatuidemo.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,9 @@ import android.widget.Toast;
 import com.hyphenate.chat.EMClient;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.DemoHelper;
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.Contact;
+
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 
 public class AddContactActivity extends BaseActivity{
@@ -75,13 +80,90 @@ public class AddContactActivity extends BaseActivity{
 			nameText.setText(toAddUsername);
 			
 		} 
-	}	
+	}
+
+	int choice = -1;
+
+	private void showGroupChoiceDialog(){
+		final String[] items = { "亲属","朋友","同事" };
+		choice = 0;
+		AlertDialog.Builder singleChoiceDialog =
+				new AlertDialog.Builder(AddContactActivity.this);
+		singleChoiceDialog.setTitle("选择分组");
+		// 第二个参数是默认选项，此处设置为0
+		singleChoiceDialog.setSingleChoiceItems(items, 0,
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						choice = which;
+					}
+				});
+		singleChoiceDialog.setPositiveButton("确定",
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						if (choice != -1) {
+//							Toast.makeText(MainActivity.this,
+//									"你选择了" + items[yourChoice],
+//									Toast.LENGTH_SHORT).show();
+							doAdd();
+							return;
+						}
+					}
+				});
+		singleChoiceDialog.show();
+	}
+
+	void doAdd() {
+		progressDialog = new ProgressDialog(this);
+		String stri = getResources().getString(R.string.Is_sending_a_request);
+		progressDialog.setMessage(stri);
+		progressDialog.setCanceledOnTouchOutside(false);
+		progressDialog.show();
+
+		new Thread(new Runnable() {
+			public void run() {
+
+				try {
+					//demo use a hardcode reason here, you need let user to input if you like
+					String s = getResources().getString(R.string.Add_a_friend);
+					EMClient.getInstance().contactManager().addContact(toAddUsername, s);
+					Contact contact = new Contact();
+					contact.setSubjectId(MyService.userName);
+					contact.setObjectId(toAddUsername);
+					contact.setGroupType(choice);
+					Boolean b = MyService.contactService.addContact(contact);
+					if (!b) {
+						throw new Exception("");
+					}
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s1 = getResources().getString(R.string.send_successful)+
+									", 分组为"+MyService.contactType.getName(choice);
+							Toast.makeText(getApplicationContext(), s1, Toast.LENGTH_LONG).show();
+						}
+					});
+				} catch (final Exception e) {
+					runOnUiThread(new Runnable() {
+						public void run() {
+							progressDialog.dismiss();
+							String s2 = getResources().getString(R.string.Request_add_buddy_failure)+
+									", 分组为"+MyService.contactType.getName(choice);
+							Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
+						}
+					});
+				}
+			}
+		}).start();
+	}
 	
 	/**
 	 *  add contact
 	 * @param view
 	 */
 	public void addContact(View view){
+		//check
 		if(EMClient.getInstance().getCurrentUser().equals(nameText.getText().toString())){
 			new EaseAlertDialog(this, R.string.not_add_myself).show();
 			return;
@@ -96,38 +178,9 @@ public class AddContactActivity extends BaseActivity{
 			new EaseAlertDialog(this, R.string.This_user_is_already_your_friend).show();
 			return;
 		}
-		
-		progressDialog = new ProgressDialog(this);
-		String stri = getResources().getString(R.string.Is_sending_a_request);
-		progressDialog.setMessage(stri);
-		progressDialog.setCanceledOnTouchOutside(false);
-		progressDialog.show();
-		
-		new Thread(new Runnable() {
-			public void run() {
-				
-				try {
-					//demo use a hardcode reason here, you need let user to input if you like
-					String s = getResources().getString(R.string.Add_a_friend);
-					EMClient.getInstance().contactManager().addContact(toAddUsername, s);
-					runOnUiThread(new Runnable() {
-						public void run() {
-							progressDialog.dismiss();
-							String s1 = getResources().getString(R.string.send_successful);
-							Toast.makeText(getApplicationContext(), s1, Toast.LENGTH_LONG).show();
-						}
-					});
-				} catch (final Exception e) {
-					runOnUiThread(new Runnable() {
-						public void run() {
-							progressDialog.dismiss();
-							String s2 = getResources().getString(R.string.Request_add_buddy_failure);
-							Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
-						}
-					});
-				}
-			}
-		}).start();
+
+		showGroupChoiceDialog();
+
 	}
 	
 	public void back(View v) {

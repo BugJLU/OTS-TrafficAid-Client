@@ -55,10 +55,10 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 			return 0;
 		} else if (position == 1) {
 			return 1;
-		} else if (position == 2) {
-			return 2;
+//		} else if (position == 2) {
+//			return 2;
 		} else {
-			return 3;
+			return 2;
 		}
 	}
 
@@ -110,7 +110,7 @@ public class GroupAdapter extends ArrayAdapter<EMGroup> {
 			if (convertView == null) {
 				convertView = inflater.inflate(R.layout.em_row_group, parent, false);
 			}
-			((TextView) convertView.findViewById(R.id.name)).setText(getItem(position - 3).getGroupName());
+			((TextView) convertView.findViewById(R.id.name)).setText(getItem(position - 2).getGroupName());
 
 		}
 
