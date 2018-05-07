@@ -31,6 +31,7 @@ import org.bugjlu.ots_trafficaid_client.fragment.RescueFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.SettingsFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.SuppliesFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.TalksFragment;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             }
         });
 
-
+        MyService.userName = uid;
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.tab_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
