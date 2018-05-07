@@ -19,6 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.model.LatLng;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 
@@ -32,6 +38,7 @@ import org.bugjlu.ots_trafficaid_client.fragment.SettingsFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.SuppliesFragment;
 import org.bugjlu.ots_trafficaid_client.fragment.TalksFragment;
 import org.bugjlu.ots_trafficaid_client.localdata.MyService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +46,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     FloatingActionButton fab;
+    LocationClient locationClient;
 
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
     @Override
@@ -91,6 +99,27 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 //            startActivity(new Intent(this, org.bugjlu.ots_trafficaid_client.chatuidemo.ui.LoginActivity.class));
 //            return;
 //        }
+
+        SDKInitializer.initialize(getApplicationContext());
+        locationClient = new LocationClient(getApplicationContext());
+        locationClient.registerLocationListener(new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                User me = MyService.userService.getUser(MyService.userName);
+                me.setGeoX(String.valueOf(bdLocation.getLatitude()));
+                me.setGeoY(String.valueOf(bdLocation.getLongitude()));
+            }
+        });
+        LocationClientOption option = new LocationClientOption();
+        option.setScanSpan(1000);
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIgnoreKillProcess(false);
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setIsNeedAddress(true);
+        option.setCoorType("bd09ll");
+        locationClient.setLocOption(option);
+        locationClient.start();
     }
 
 
@@ -131,4 +160,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        locationClient.stop();
+    }
 }
