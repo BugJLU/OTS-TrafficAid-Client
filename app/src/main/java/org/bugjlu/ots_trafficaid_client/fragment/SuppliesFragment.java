@@ -45,6 +45,7 @@ public class SuppliesFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MapActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 

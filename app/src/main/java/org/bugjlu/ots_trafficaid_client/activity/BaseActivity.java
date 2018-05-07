@@ -67,4 +67,5 @@ public class BaseActivity extends AppCompatActivity {
         // cancel the no tification
         EaseUI.getInstance().getNotifier().reset();
     }
+
 }

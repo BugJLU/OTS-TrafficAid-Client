@@ -1,6 +1,7 @@
 package org.bugjlu.ots_trafficaid_client.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -35,14 +36,14 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 
-import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.bugjlu.ots_trafficaid_client.R.color.colorPrimaryDark;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity extends PermissionBaseActivity {
 
     private BaiduMap baiduMap;
     private boolean isFirstLocate = true;
@@ -61,35 +62,36 @@ public class MapActivity extends AppCompatActivity {
 
 
 
-        List<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(MapActivity.this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this,
-                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
-        {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty())
-        {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
-        }else
-        {
-            requestLocation();
-        }
+//        List<String> permissionList = new ArrayList<>();
+//        if (ContextCompat.checkSelfPermission(MapActivity.this,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+//        }
+//        if (ContextCompat.checkSelfPermission(MapActivity.this,
+//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+//        }
+//        if (ContextCompat.checkSelfPermission(MapActivity.this,
+//                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+//        }
+//        if (ContextCompat.checkSelfPermission(MapActivity.this,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+//        {
+//            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//        }
+//        if (!permissionList.isEmpty())
+//        {
+//            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+//            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
+//        }
+//        else
+//        {
+//            requestLocation();
+//        }
     }
 
     @Override
@@ -104,7 +106,10 @@ public class MapActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home:
-                finish();
+                //TODO
+//                Toast.makeText(getApplicationContext(), "cnmlgb", Toast.LENGTH_SHORT).show();
+//                finish();
+                onBackPressed();
                 return true;
             case R.id.allthing:
                 //点击之后显示全部物品
@@ -145,6 +150,14 @@ public class MapActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MapActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mapView.onPause();
@@ -159,9 +172,10 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void permissionCallback() {
+        super.permissionCallback();
 
-    private void requestLocation()
-    {
         mapView = (MapView) findViewById(R.id.map_view);
         baiduMap = mapView.getMap();
         locationClient = new LocationClient(getApplicationContext());
@@ -203,33 +217,33 @@ public class MapActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode)
-        {
-            case 1:
-                if (grantResults.length > 0)
-                {
-                    for (int result:grantResults)
-                    {
-                        if (result != PackageManager.PERMISSION_GRANTED)
-                        {
-                            Toast.makeText(this, "必须同意所有权限才能使用本功能",Toast.LENGTH_LONG).show();
-                            finish();
-                            return;
-                        }
-                    }
-                    requestLocation();
-                }else
-                {
-                    Toast.makeText(this, "发生未知错误", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-                default:
-                    break;
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        switch (requestCode)
+//        {
+//            case 1:
+//                if (grantResults.length > 0)
+//                {
+//                    for (int result:grantResults)
+//                    {
+//                        if (result != PackageManager.PERMISSION_GRANTED)
+//                        {
+//                            Toast.makeText(this, "必须同意所有权限才能使用本功能",Toast.LENGTH_LONG).show();
+//                            finish();
+//                            return;
+//                        }
+//                    }
+//                    requestLocation();
+//                }else
+//                {
+//                    Toast.makeText(this, "发生未知错误", Toast.LENGTH_SHORT).show();
+//                    finish();
+//                }
+//                break;
+//                default:
+//                    break;
+//        }
+//    }
 
 
 

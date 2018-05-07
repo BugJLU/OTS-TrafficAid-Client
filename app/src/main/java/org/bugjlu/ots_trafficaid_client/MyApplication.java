@@ -1,10 +1,19 @@
 package org.bugjlu.ots_trafficaid_client;
 
+import android.*;
 import android.content.Context;
 import android.app.Application;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+
+import org.bugjlu.ots_trafficaid_client.activity.MapActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mac on 2018/5/7.
