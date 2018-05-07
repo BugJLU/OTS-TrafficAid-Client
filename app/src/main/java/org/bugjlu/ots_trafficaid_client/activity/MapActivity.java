@@ -112,7 +112,7 @@ public class MapActivity extends AppCompatActivity {
             case R.id.medicine:
                 //点击药物之后做显示
 
-                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.location);
+                BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher);
                 List<OverlayOptions> list = new ArrayList<>();
                 LatLng point = new LatLng(39.963175, 116.400244);
                 list.add(new MarkerOptions().position(point).icon(bitmap));

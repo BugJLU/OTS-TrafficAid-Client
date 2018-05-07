@@ -12,7 +12,6 @@ import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
 
-import org.bugjlu.ots_trafficaid_client.BaseActivity;
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
 
