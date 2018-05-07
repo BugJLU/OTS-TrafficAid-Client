@@ -64,8 +64,8 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
                             public void onClick(DialogInterface dialog, int which) {
                                 //删除后还要通知服务端进行更新
 
-                                MyService.resourceService.removeResource(resourceList.get(positon).getId());
-                                MysupplyActivity.updateResources();
+//                                MyService.resourceService.removeResource(resourceList.get(positon).getId());
+//                                MysupplyActivity.updateResources();
                                 notifyItemRemoved(positon);
                             }
                         }).create();

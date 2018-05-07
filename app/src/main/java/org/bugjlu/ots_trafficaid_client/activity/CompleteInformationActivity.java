@@ -72,7 +72,7 @@ public class CompleteInformationActivity extends AppCompatActivity {
                 newInfo.setPlateNum(platenum.getText().toString());
                 newInfo.setCarType(cartype.getText().toString());
                 newInfo.setContactInfo(contactinfo.getText().toString());
-                MyService.userService.updateUserInfo(newInfo);
+//                MyService.userService.updateUserInfo(newInfo);
                 finish();
             }
         });

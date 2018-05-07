@@ -110,89 +110,89 @@ public class MapActivity extends AppCompatActivity {
         List<User> users = MyService.userService.getUserAround(MyService.userName, 5);
         switch (item.getItemId())
         {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.allthing:
-                for (User user : users)
-                {
-                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
-                    boolean have = false;
-                    for (Resource resource : resources)
-                    {
-                        LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
-                        if (resource.getType() == 1)
-                        {
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
-                        }
-                        else if (resource.getType() == 2)
-                        {
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
-                        }
-                        else if (resource.getType() == 3)
-                        {
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
-                        }
-                    }
-                }
-                baiduMap.addOverlays(list);
-                break;
-            case R.id.medicine:
-                //点击药物之后做显示
-                for (User user : users)
-                {
-                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
-                    boolean have = false;
-                    for (Resource resource : resources)
-                    {
-                        if (resource.getType() == 2)
-                        {
-                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：药物" + "\n" + "名称：" + resource.getName()));
-                        }
-                    }
-                }
-                baiduMap.addOverlays(list);
-                break;
-            case R.id.tool:
-
-                for (User user : users)
-                {
-                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
-                    boolean have = false;
-                    for (Resource resource : resources)
-                    {
-                        if (resource.getType() == 3)
-                        {
-                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
-                        }
-                    }
-                }
-                baiduMap.addOverlays(list);
-                break;
-            case R.id.stopblood:
-                for (User user : users)
-                {
-                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
-                    boolean have = false;
-                    for (Resource resource : resources)
-                    {
-                        if (resource.getType() == 1)
-                        {
-                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
-                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
-                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
-                        }
-                    }
-                }
-                baiduMap.addOverlays(list);
-                break;
+//            case android.R.id.home:
+//                finish();
+//                return true;
+//            case R.id.allthing:
+//                for (User user : users)
+//                {
+//                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+//                    boolean have = false;
+//                    for (Resource resource : resources)
+//                    {
+//                        LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+//                        if (resource.getType() == 1)
+//                        {
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                        else if (resource.getType() == 2)
+//                        {
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                        else if (resource.getType() == 3)
+//                        {
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                    }
+//                }
+//                baiduMap.addOverlays(list);
+//                break;
+//            case R.id.medicine:
+//                //点击药物之后做显示
+//                for (User user : users)
+//                {
+//                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+//                    boolean have = false;
+//                    for (Resource resource : resources)
+//                    {
+//                        if (resource.getType() == 2)
+//                        {
+//                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：药物" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                    }
+//                }
+//                baiduMap.addOverlays(list);
+//                break;
+//            case R.id.tool:
+//
+//                for (User user : users)
+//                {
+//                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+//                    boolean have = false;
+//                    for (Resource resource : resources)
+//                    {
+//                        if (resource.getType() == 3)
+//                        {
+//                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：工具" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                    }
+//                }
+//                baiduMap.addOverlays(list);
+//                break;
+//            case R.id.stopblood:
+//                for (User user : users)
+//                {
+//                    List<Resource> resources = MyService.resourceService.getResourcesFrom(user.getId());
+//                    boolean have = false;
+//                    for (Resource resource : resources)
+//                    {
+//                        if (resource.getType() == 1)
+//                        {
+//                            LatLng point = new LatLng(Double.parseDouble(user.getGeoX()), Double.parseDouble(user.getGeoY()));
+//                            list.add(new MarkerOptions().position(point).icon(bitmap).title(
+//                                    "用户名：" + user.getName()+ "\n" + "联系方式：" + user.getContactInfo() + "\n" + "类型：止血" + "\n" + "名称：" + resource.getName()));
+//                        }
+//                    }
+//                }
+//                baiduMap.addOverlays(list);
+//                break;
 
             case R.id.nothing:
                 baiduMap.clear();

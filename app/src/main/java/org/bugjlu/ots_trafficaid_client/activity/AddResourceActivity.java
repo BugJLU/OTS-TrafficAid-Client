@@ -53,7 +53,7 @@ public class AddResourceActivity extends AppCompatActivity {
                             }).show();
                 }else
                 {
-                    MyService.resourceService.addResource(resource);
+//                    MyService.resourceService.addResource(resource);
                     MysupplyActivity.updateResources();
                     finish();
                 }
