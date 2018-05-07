@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class RestHandler {
     static RestTemplate restTemplate;
-    static String URL = "http://211.159.147.229:8080/ots_server/";
+    static String URL = "http://39.106.250.254:9080/ots_server/";
     static {
         restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());

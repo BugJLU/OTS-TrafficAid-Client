@@ -34,7 +34,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         EMOptions options = new EMOptions();
-        options.setAcceptInvitationAlways(true); // 默认添加好友时，是不需要验证的，//改成需要验证
+        options.setAcceptInvitationAlways(false); // 默认添加好友时，是不需要验证的，改成需要验证
         options.setAutoLogin(false);
         EMClient.getInstance().init(this, options);
         EMClient.getInstance().setDebugMode(true); //在做打包混淆时，关闭debug模式，避免消耗不必要的资源

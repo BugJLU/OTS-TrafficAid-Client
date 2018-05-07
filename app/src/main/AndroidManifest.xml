@@ -78,7 +78,7 @@
 
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1107180501253239#trafficaid" />
+            android:value="1116180415228495#ots-trafficaid" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="KaeYZdpCViprnDEwe6jEEM9Wxs0nYdB3" />
