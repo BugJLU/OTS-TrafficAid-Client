@@ -1,9 +1,15 @@
 package org.bugjlu.ots_trafficaid_client.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,9 +37,20 @@ import com.hyphenate.chat.EMGroupOptions;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.exceptions.HyphenateException;
 
+import android.provider.MediaStore.Images.ImageColumns;
+
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.ui.ChatActivity;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.Contact;
+import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,22 +61,74 @@ public class RescueActivity extends PermissionBaseActivity {
     private Bitmap picture;
     private Uri uri;
 
+    String photoPath = null;
+    String voicePath = null;
+    int voiceDuration = 0;
+
     private CheckBox[] etiology = new CheckBox[3];
     private EditText textInput;
     private Button[] otherInput = new Button[2];
     private Button send;
+//    Intent intent = null;
+    Boolean isSelf = true;
+    User user = null;
+
 
     public String groupName;
+
+    String getCheckedMsg() {
+        String res="";
+        for (CheckBox cb :
+                etiology) {
+            if (cb.isChecked()) {
+                res+=cb.getText().toString() + ";";
+            }
+        }
+        return res;
+    }
+
+    String getVoicePath() {
+        return voicePath;
+    }
+
+    String getPhotoPath() {
+        return photoPath;
+    }
+
+    public int getVoiceDuration() {
+        return voiceDuration/1000;
+    }
+
 
     Runnable callThread = new Runnable() {
         @Override
         public void run() {
+            user = MyService.userService.getUser(MyService.userName);
             EMGroupOptions option = new EMGroupOptions();
             option.maxUsers = 200;
             option.style = EMGroupManager.EMGroupStyle.EMGroupStylePrivateMemberCanInvite;
-            String allMembers[] = {"police","hosptical"};
+//            Boolean isRescue = isSelf;
+            ArrayList<String> allMembers = new ArrayList<>();// = {"police","hosptical"};
+            allMembers.add("police");
+            allMembers.add("hospital");
+            if (isSelf) {
+                if (user.getEmgContact() != null) {
+                    allMembers.add(user.getEmgContact());
+                }
+                List<User> aroundOnes = MyService.userService.getHeplerAround(user.getId());
+                if (aroundOnes != null) {
+                    for (User u:
+                         aroundOnes) {
+                        allMembers.add(u.getId());
+                    }
+                }
+            }
+            String[] memb = new String[allMembers.size()];
+            for (int i = 0; i < allMembers.size(); i++) {
+                memb[i] = allMembers.get(i);
+            }
             try {
-                EMClient.getInstance().groupManager().createGroup(groupName, groupName, allMembers, "no reason", option);
+                EMClient.getInstance().groupManager().createGroup(groupName, groupName, memb, "no reason", option);
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
@@ -68,13 +137,18 @@ public class RescueActivity extends PermissionBaseActivity {
 
     class SendOnClickListener implements View.OnClickListener {
 
-        Bitmap bitmap;
-        Uri uri;
+//        Bitmap bitmap;
+//        Uri uri;
 
-
-        public SendOnClickListener(Bitmap b, Uri u){
-            bitmap = b; uri = u;
-        }
+//        String photoPath;
+//        String voicePath;
+//
+//
+//        public SendOnClickListener(String p, String v){
+////            bitmap = b; uri = u;
+//            photoPath = p;
+//            voicePath = v;
+//        }
 
         @Override
         public void onClick(View v) {
@@ -88,9 +162,17 @@ public class RescueActivity extends PermissionBaseActivity {
                 if(group.getGroupName().equals(groupName))
                     objGroup = group.getGroupId();
             }
-            if (!groupName.equals(objGroup)) return;
+            if (objGroup == null) return;
 
-            EMMessage messageInfo = EMMessage.createTxtSendMessage("",objGroup);
+//            User user = MyService.userService.getUser(MyService.userName);
+            if (user == null) return;
+
+            String msg = (isSelf?"当事人报警：":"非当事人报警：") +"\n"+
+                    "病情："+ getCheckedMsg() + "\n" +
+                    (etiology[2].isChecked()?("病史：" + user.getMediHist()):"") + "\n" +
+                    "具体情况："+textInput.getText().toString();
+
+            EMMessage messageInfo = EMMessage.createTxtSendMessage(msg, objGroup);
             EMMessage messageLocation = EMMessage.createLocationSendMessage(x , y, country, objGroup);
             messageLocation.setChatType(EMMessage.ChatType.GroupChat);
             messageInfo.setChatType(EMMessage.ChatType.GroupChat);
@@ -98,12 +180,84 @@ public class RescueActivity extends PermissionBaseActivity {
             EMClient.getInstance().chatManager().sendMessage(messageLocation);
 //            sendImageMessage(path);
             //TODO
-            EMMessage message = EMMessage.createImageSendMessage("bitmap", false, objGroup);
-            message.setChatType(EMMessage.ChatType.GroupChat);
-            EMClient.getInstance().chatManager().sendMessage(message);
+
+            if (getPhotoPath() != null) {
+                EMMessage messageImage = EMMessage.createImageSendMessage(getPhotoPath(), false, objGroup);
+                messageImage.setChatType(EMMessage.ChatType.GroupChat);
+                EMClient.getInstance().chatManager().sendMessage(messageImage);
+            }
+            if (getVoicePath() != null) {
+                EMMessage messageVoice = EMMessage.createVoiceSendMessage(getVoicePath(), getVoiceDuration(), objGroup);
+                messageVoice.setChatType(EMMessage.ChatType.GroupChat);
+                EMClient.getInstance().chatManager().sendMessage(messageVoice);
+            }
+
             startActivity(new Intent(RescueActivity.this, ChatActivity.class).putExtra("userId", objGroup));
             RescueActivity.this.finish();
 
+        }
+    }
+
+    public static String getRealFilePath(final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
+    public static String savePictToStorage(Bitmap photo) {
+        FileOutputStream fileOutputStream = null;
+        File file = null;
+        try {
+            // 获取 SD 卡根目录
+            String saveDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/ots/photos";
+            // 新建目录
+            File dir = new File(saveDir);
+            if (! dir.exists())
+                dir.mkdirs();
+            // 生成文件名
+            SimpleDateFormat t = new SimpleDateFormat("yyyyMMddssSSS");
+            String filename = "ots_rescue" + (t.format(new Date())) + ".jpg";
+            // 新建文件
+            file = new File(saveDir, filename);
+//            file.mkdirs();
+            // 打开文件输出流
+            fileOutputStream = new FileOutputStream(file);
+            // 生成图片文件
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            // 相片的完整路径
+//            return file.getAbsolutePath();
+//            ImageView imageView = (ImageView) findViewById(R.id.showPhoto);
+//            imageView.setImageBitmap(this.photo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+//            return null;
+            if (file != null) return file.getAbsolutePath();
+            else return null;
         }
     }
 
@@ -115,6 +269,7 @@ public class RescueActivity extends PermissionBaseActivity {
         setContentView(R.layout.activity_rescue);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
+        isSelf = intent.getBooleanExtra("isRescue", true);
 
         SDKInitializer.initialize(getApplicationContext());
         locationClient = new LocationClient(getApplicationContext());
@@ -126,10 +281,10 @@ public class RescueActivity extends PermissionBaseActivity {
         locationClient.setLocOption(option);
         locationClient.start();
 
-        groupName = String.valueOf(System.currentTimeMillis());
+        groupName = MyService.userName +"_rescue_"+ String.valueOf(System.currentTimeMillis());
         new Thread(callThread).start();
-        Boolean isRescue = intent.getBooleanExtra("isRescue", true);
-        if (isRescue)
+//        Boolean isRescue = intent.getBooleanExtra("isRescue", true);
+        if (isSelf)
         {
             setTitle("当事人求救");
         }
@@ -145,9 +300,9 @@ public class RescueActivity extends PermissionBaseActivity {
         textInput = (EditText) findViewById(R.id.rescue_text_in);
         otherInput[0] = (Button) findViewById(R.id.rescue_voice_in);
         otherInput[1] = (Button) findViewById(R.id.rescue_video_in);
-        send = (Button) findViewById(R.id.commit);
+        send = (Button) findViewById(R.id.rescue_commit);
 
-        if(!isRescue)
+        if(!isSelf)
         {
             etiology[2].setVisibility(View.GONE);
         }
@@ -167,7 +322,7 @@ public class RescueActivity extends PermissionBaseActivity {
             }
         });
         //TODO
-        send.setOnClickListener(new SendOnClickListener(picture, uri));
+        send.setOnClickListener(new SendOnClickListener());
     }
 
     @Override
@@ -178,11 +333,30 @@ public class RescueActivity extends PermissionBaseActivity {
             if (requestCode == REQUEST_VOICE)
             {
                 uri = data.getData();
+                voicePath = getRealFilePath(RescueActivity.this, uri);
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(RescueActivity.this, uri);
+                    mediaPlayer.prepare();
+                    voiceDuration = mediaPlayer.getDuration();
+//                    Toast.makeText(getApplicationContext(), String.valueOf(voiceDuration), Toast.LENGTH_SHORT).show();
+                    otherInput[0].setClickable(false);
+                    otherInput[0].setBackgroundColor(Color.WHITE);
+                    otherInput[0].setText("已选择语音");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             else if (requestCode == REQUEST_VIDEO)
             {
+//                Uri uri = data.getData();
+//                photoPath = getRealFilePath(RescueActivity.this, uri);
                 Bundle bundle = data.getExtras();
                 picture = (Bitmap) bundle.get("data");
+                photoPath = savePictToStorage(picture);
+                otherInput[1].setClickable(false);
+                otherInput[1].setBackgroundColor(Color.WHITE);
+                otherInput[1].setText("已选择图像");
             }
         }
         else

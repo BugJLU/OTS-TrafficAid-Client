@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import org.bugjlu.ots_trafficaid_client.MainActivity;
+import org.bugjlu.ots_trafficaid_client.activity.MainActivity;
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.activity.CompleteInformationActivity;
 import org.bugjlu.ots_trafficaid_client.activity.MyCaseActivity;

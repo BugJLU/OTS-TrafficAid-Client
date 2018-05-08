@@ -43,14 +43,19 @@ public class PermissionBaseActivity extends AppCompatActivity {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
         if (ContextCompat.checkSelfPermission(PermissionBaseActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (ContextCompat.checkSelfPermission(PermissionBaseActivity.this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
         {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            permissionList.add(Manifest.permission.CAMERA);
         }
         if (ContextCompat.checkSelfPermission(PermissionBaseActivity.this,
                 Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
         {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            permissionList.add(Manifest.permission.RECORD_AUDIO);
         }
         if (!permissionList.isEmpty())
         {
