@@ -86,6 +86,9 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_view, new RescueFragment());
         transaction.commit();
+
+
+
 //        if (getIntent() != null &&
 //                (getIntent().getBooleanExtra(Constant.ACCOUNT_REMOVED, false) ||
 //                        getIntent().getBooleanExtra(Constant.ACCOUNT_KICKED_BY_CHANGE_PASSWORD, false) ||
@@ -100,26 +103,26 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 //            return;
 //        }
 
-//        SDKInitializer.initialize(getApplicationContext());
-//        locationClient = new LocationClient(getApplicationContext());
-//        locationClient.registerLocationListener(new BDAbstractLocationListener() {
-//            @Override
-//            public void onReceiveLocation(BDLocation bdLocation) {
-//                User me = MyService.userService.getUser(MyService.userName);
-//                me.setGeoX(String.valueOf(bdLocation.getLatitude()));
-//                me.setGeoY(String.valueOf(bdLocation.getLongitude()));
-//            }
-//        });
-//        LocationClientOption option = new LocationClientOption();
-//        option.setScanSpan(1000);
-//        option.setOpenGps(true);
-//        option.setLocationNotify(true);
-//        option.setIgnoreKillProcess(false);
-//        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
-//        option.setIsNeedAddress(true);
-//        option.setCoorType("bd09ll");
-//        locationClient.setLocOption(option);
-//        locationClient.start();
+        SDKInitializer.initialize(getApplicationContext());
+        locationClient = new LocationClient(getApplicationContext());
+        locationClient.registerLocationListener(new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation bdLocation) {
+                User me = MyService.userService.getUser(MyService.userName);
+                me.setGeoX(String.valueOf(bdLocation.getLatitude()));
+                me.setGeoY(String.valueOf(bdLocation.getLongitude()));
+            }
+        });
+        LocationClientOption option = new LocationClientOption();
+        option.setScanSpan(1000);
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIgnoreKillProcess(false);
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setIsNeedAddress(true);
+        option.setCoorType("bd09ll");
+        locationClient.setLocOption(option);
+        locationClient.start();
     }
 
 
