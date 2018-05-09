@@ -10,4 +10,10 @@
         <item>男</item>
         <item>女</item>>
     </string-array>
+    
+    <string-array name="career_types">
+        <item>交警</item>
+        <item>医疗部门</item>
+        <item>行医资格</item>
+    </string-array>
 </resources>

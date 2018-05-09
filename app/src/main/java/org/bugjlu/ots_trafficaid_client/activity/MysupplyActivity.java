@@ -8,9 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.adapter.ResourceAdapter;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
 
 import java.util.ArrayList;
@@ -18,7 +21,10 @@ import java.util.List;
 
 public class MysupplyActivity extends AppCompatActivity {
 
-    private List<Resource> resourceList = new ArrayList<>();
+    public static List<Resource> resourceList = new ArrayList<>();
+    public static ResourceAdapter adapter = null;
+    private TextView text = null;
+    public static RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +33,12 @@ public class MysupplyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("我的物资");
 
-
+        text = (TextView) findViewById(R.id.resource_purpose);
         initResources();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list_resource);
+        recyclerView = (RecyclerView) findViewById(R.id.list_resource);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        ResourceAdapter adapter = new ResourceAdapter(resourceList);
+        adapter = new ResourceAdapter(resourceList);
         recyclerView.setAdapter(adapter);
 
         Button addResource = (Button) findViewById(R.id.add_resource);
@@ -43,17 +49,58 @@ public class MysupplyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true)
+//                {
+//                    resourceList = MyService.resourceService.getResourcesFrom(MyService.userName);
+//                    adapter = new ResourceAdapter(resourceList);
+//
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            recyclerView.setAdapter(adapter);
+//                            adapter.notifyDataSetChanged();
+//                        }
+//                    });
+//                }
+//            }
+//        }).start();
+    }
+
+    public static void setResourceList(List<Resource> list)
+    {
+        resourceList = list;
+        adapter = new ResourceAdapter(resourceList);
+        recyclerView.setAdapter(adapter);
     }
 
     private void initResources()
     {
-        for(int i = 0; i < 30; i++)
-        {
-            ////以后要改成和服务端进行通信
-            Resource resource = new Resource();
-            resource.setName("测试" + i);
-            resourceList.add(resource);
-        }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    resourceList = MyService.resourceService.getResourcesFrom(MyService.userName);
+                    adapter = new ResourceAdapter(resourceList);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }).start();
+
+//        for (int i = 0; i < 10; i++)
+//        {
+//            Resource resource = new Resource();
+//            resource.setName("ceshu" + i);
+//            resourceList.add(resource);
+//        }
 
     }
 
@@ -66,5 +113,11 @@ public class MysupplyActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

@@ -58,11 +58,12 @@
 
                 android:textColor="#fff"
                 android:textSize="40dp"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="物资发展"
-                android:textAlignment="center"/>
+                android:text="搭配发展"
+                android:textAlignment="center" />
         </LinearLayout>
 
         <LinearLayout

@@ -5,11 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="16dp"
     tools:context=".activity.CompleteInformationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/complete_info_l"
         android:orientation="horizontal">
 
         <ImageView
@@ -19,15 +23,15 @@
             android:adjustViewBounds="true"
             app:srcCompat="@mipmap/personal_information"
             android:padding="8dp"/>
-        <Button
+        <TextView
             android:id="@+id/complete_information"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
-            android:textAlignment="textStart"
             android:paddingLeft="20dp"
+            android:layout_gravity="center_vertical"
             android:text="完善个人信息"/>
     </LinearLayout>
 
@@ -35,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/my_cases_l"
         >
 
         <ImageView
@@ -44,21 +49,22 @@
             android:adjustViewBounds="true"
             app:srcCompat="@mipmap/my_cases"
             android:padding="5dp"/>
-        <Button
+        <TextView
             android:id="@+id/my_cases"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
-            android:textAlignment="textStart"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="我的病例"/>
+            android:text="我的病历"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/pro_certif_l"
         android:orientation="horizontal">
 
         <ImageView
@@ -66,23 +72,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            app:srcCompat="@mipmap/professional_certification"
-            android:padding="5dp"/>
-        <Button
+            android:padding="5dp"
+            app:srcCompat="@mipmap/professional_certification" />
+
+        <TextView
             android:id="@+id/professional_certification"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
-            android:textAlignment="textStart"
             android:paddingLeft="20dp"
-            android:text="职业认证"/>
+            android:text="职业认证"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/my_rescue_l"
         android:orientation="horizontal">
 
         <ImageView
@@ -92,14 +100,14 @@
             android:adjustViewBounds="true"
             app:srcCompat="@mipmap/participate_in"
             android:padding="5dp"/>
-        <Button
+        <TextView
             android:id="@+id/my_rescue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:textColor="@android:color/darker_gray"
             android:background="@android:color/white"
-            android:textAlignment="textStart"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="我参与过的救援"/>
     </LinearLayout>

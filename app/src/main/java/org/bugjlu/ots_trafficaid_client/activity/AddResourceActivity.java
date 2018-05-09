@@ -13,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.adapter.ResourceAdapter;
+import org.bugjlu.ots_trafficaid_client.localdata.MyService;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.Resource;
 
 public class AddResourceActivity extends AppCompatActivity {
@@ -35,9 +37,10 @@ public class AddResourceActivity extends AppCompatActivity {
                 String name = (String) editText.getText().toString();
                 Integer type = (int) spinner.getSelectedItemId();
 
-                Resource resource = new Resource();
+                final Resource resource = new Resource();
                 resource.setName(name);
                 resource.setType(type);
+                resource.setPossessorId(MyService.userName);
 
 
 
@@ -54,6 +57,23 @@ public class AddResourceActivity extends AppCompatActivity {
                             }).show();
                 }else
                 {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyService.resourceService.addResource(resource);
+                            MysupplyActivity.resourceList = MyService.resourceService.getResourcesFrom(MyService.userName);
+                            MysupplyActivity.adapter = new ResourceAdapter(MysupplyActivity.resourceList);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MysupplyActivity.recyclerView.setAdapter(MysupplyActivity.adapter);
+                                    MysupplyActivity.adapter.notifyDataSetChanged();
+                                }
+                            });
+
+
+                        }
+                    }).start();
                     finish();
                     //进行传输，和服务端的通信操作
                 }

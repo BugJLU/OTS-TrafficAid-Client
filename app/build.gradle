@@ -47,7 +47,6 @@ dependencies {
 //    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     //compile 'org.apache.httpcomponents:httpcore:4.4.4'
 //    compile 'org.apache.httpcomponents:httpclient-osgi:4.5.1'
-    
 
     //    testCompile 'org.apache.httpcomponents:httpclient:4.5.2'
     //compile 'com.android.support.constraint:constraint-button_rectangle_red:1.1.0'

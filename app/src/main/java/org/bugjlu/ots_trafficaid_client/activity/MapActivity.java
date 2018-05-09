@@ -53,45 +53,16 @@ public class MapActivity extends PermissionBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_map);
-        //textView = (TextView) findViewById(R.id.my_positon);
+        mapView = (MapView) findViewById(R.id.map_view);
+//        baiduMap = mapView.getMap();
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("周围物资");
+        super.onCreate(savedInstanceState);
 
-
-
-//        List<String> permissionList = new ArrayList<>();
-//        if (ContextCompat.checkSelfPermission(MapActivity.this,
-//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-//        }
-//        if (ContextCompat.checkSelfPermission(MapActivity.this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            permissionList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
-//        }
-//        if (ContextCompat.checkSelfPermission(MapActivity.this,
-//                Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-//        }
-//        if (ContextCompat.checkSelfPermission(MapActivity.this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-//        {
-//            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//        }
-//        if (!permissionList.isEmpty())
-//        {
-//            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-//            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
-//        }
-//        else
-//        {
-//            requestLocation();
-//        }
     }
 
     @Override
@@ -176,7 +147,6 @@ public class MapActivity extends PermissionBaseActivity {
     public void permissionCallback() {
         super.permissionCallback();
 
-        mapView = (MapView) findViewById(R.id.map_view);
         baiduMap = mapView.getMap();
         locationClient = new LocationClient(getApplicationContext());
         locationClient.registerLocationListener(new MyLocationListener());
@@ -244,6 +214,7 @@ public class MapActivity extends PermissionBaseActivity {
 //                    break;
 //        }
 //    }
+
 
 
 

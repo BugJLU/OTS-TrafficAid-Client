@@ -43,6 +43,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //new MysupplyActivity();
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);

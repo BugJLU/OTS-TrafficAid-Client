@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import org.bugjlu.ots_trafficaid_client.R;
+import org.bugjlu.ots_trafficaid_client.activity.CndActivity;
 import org.bugjlu.ots_trafficaid_client.activity.MainActivity;
 import org.bugjlu.ots_trafficaid_client.activity.MapActivity;
 import org.bugjlu.ots_trafficaid_client.activity.MysupplyActivity;
@@ -36,7 +37,9 @@ public class SuppliesFragment extends Fragment {
         development.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //进入一个展示死图的activity
+                Intent intent = new Intent(getActivity(), CndActivity.class);
+                startActivity(intent);
+//                getActivity().finish();
             }
         });
 
