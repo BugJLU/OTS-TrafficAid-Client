@@ -65,7 +65,7 @@ public class LoginCallbackHelper implements EMCallBack {
 //        if(DEBUG)
 //            Log.d(TAG, "登录聊天服务器失败！"+error+code);
         Looper.prepare();
-        Toast.makeText(context.getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context.getApplicationContext(), error, Toast.LENGTH_SHORT).show();
         Looper.loop();
     }
 

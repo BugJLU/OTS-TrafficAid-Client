@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import org.bugjlu.ots_trafficaid_client.chatuidemo.db.DemoDBManager;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.ui.*;
 import org.bugjlu.ots_trafficaid_client.remote.remote_object.User;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends AppCompatActivity {
     EditText txUid,txPwd;
     Button bLog,bReg;
     private  final String TAG = "LOGIN";
@@ -80,6 +81,11 @@ public class LoginActivity extends BaseActivity {
                pwd = ((EditText) findViewById(R.id.l_password)).getText().toString();
                 //Log.d(TAG, "登录聊天服务器成功！");
 
+                if (uid == null || pwd == null || uid.equals("") || pwd.equals("")) {
+                    Toast.makeText(getApplicationContext(), "用户名和密码不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 DemoHelper.getInstance().setCurrentUserName(uid);
                 DemoDBManager.init(getApplicationContext());
 
@@ -96,6 +102,12 @@ public class LoginActivity extends BaseActivity {
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                    }
+
+                    @Override
+                    public void onError(int code, String error) {
+                        super.onError(code, error);
+                        Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
                     }
                 }
                 EMClient.getInstance().login(uid, pwd, new LCH(LoginActivity.this, uid, pwd));

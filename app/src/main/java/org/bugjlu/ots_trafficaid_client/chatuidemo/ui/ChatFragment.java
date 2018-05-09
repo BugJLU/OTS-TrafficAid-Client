@@ -317,17 +317,17 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     public boolean onExtendMenuItemClick(int itemId, View view) {
         switch (itemId) {
         case ITEM_VIDEO:
-            Intent intent = new Intent(getActivity(), ImageGridActivity.class);
-            startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+//            Intent intent = new Intent(getActivity(), ImageGridActivity.class);
+//            startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
             break;
         case ITEM_FILE: //file
-            selectFileFromLocal();
+//            selectFileFromLocal();
             break;
         case ITEM_VOICE_CALL:
-            startVoiceCall();
+//            startVoiceCall();
             break;
         case ITEM_VIDEO_CALL:
-            startVideoCall();
+//            startVideoCall();
             break;
         default:
             break;

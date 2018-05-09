@@ -174,10 +174,14 @@ public class RescueActivity extends PermissionBaseActivity {
 
             EMMessage messageInfo = EMMessage.createTxtSendMessage(msg, objGroup);
             EMMessage messageLocation = EMMessage.createLocationSendMessage(x , y, country, objGroup);
+            EMMessage messageLocText = EMMessage.createTxtSendMessage("地理位置坐标：\n"+x+","+y, objGroup);
+//            Toast.makeText(getApplicationContext(), x+","+y, Toast.LENGTH_SHORT).show();
             messageLocation.setChatType(EMMessage.ChatType.GroupChat);
             messageInfo.setChatType(EMMessage.ChatType.GroupChat);
+            messageLocText.setChatType(EMMessage.ChatType.GroupChat);
             EMClient.getInstance().chatManager().sendMessage(messageInfo);
             EMClient.getInstance().chatManager().sendMessage(messageLocation);
+            EMClient.getInstance().chatManager().sendMessage(messageLocText);
 //            sendImageMessage(path);
             //TODO
 
@@ -276,6 +280,7 @@ public class RescueActivity extends PermissionBaseActivity {
         locationClient.registerLocationListener(new MyLocationListener());
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(5000);
+        option.setCoorType("bd09ll");
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         option.setIsNeedAddress(true);
         locationClient.setLocOption(option);

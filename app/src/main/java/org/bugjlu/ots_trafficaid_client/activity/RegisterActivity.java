@@ -41,6 +41,15 @@ public class RegisterActivity extends BaseActivity{
                            String prefer_name = txPreName.getText().toString();
                            String uid = txUid.getText().toString();
                            String pwd = txPwd.getText().toString();
+                           if (uid == null || pwd == null || uid.equals("") || pwd.equals("")){
+                               runOnUiThread(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       Toast.makeText(getApplicationContext(), "用户名和密码不能为空", Toast.LENGTH_SHORT).show();
+                                   }
+                               });
+                               return;
+                           }
                            if(DEBUG){
                                Log.d(TAG,"userid:"+uid+" "+"password:"+pwd);
                            }
@@ -57,7 +66,8 @@ public class RegisterActivity extends BaseActivity{
                                if(userService.addUser(user)){
                                    EMClient.getInstance().createAccount(uid,pwd);
                                    Toast.makeText(getApplicationContext(),"注册成功 !",Toast.LENGTH_SHORT).show();
-
+                                   finish();
+                                   return;
                                }else{
                                    if(DEBUG){
                                        Log.d(TAG,"add to server unsuccessfully !");

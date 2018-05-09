@@ -23,7 +23,7 @@ public class MysupplyActivity extends AppCompatActivity {
 
     public static List<Resource> resourceList = new ArrayList<>();
     public static ResourceAdapter adapter = null;
-    private TextView text = null;
+    public static TextView text = null;
     public static RecyclerView recyclerView;
 
     @Override

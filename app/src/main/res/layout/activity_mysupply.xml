@@ -46,11 +46,25 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:alpha="0.6"
+        android:background="@android:color/darker_gray"
+        />
+
     <TextView
         android:id="@+id/resource_purpose"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/black_deep"
+        android:text="长按删除，点击物品显示详细信息"
         android:minLines="5"
         android:gravity="top"/>
 

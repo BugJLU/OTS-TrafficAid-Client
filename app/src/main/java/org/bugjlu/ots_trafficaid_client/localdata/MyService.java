@@ -41,6 +41,19 @@ public class MyService {
         }
     }
 
+    public static String getTypeName(int type) {
+        switch (type) {
+            case 0:
+                return "止血";
+            case 1:
+                return "药物";
+            case 2:
+                return "工具";
+            default:
+                return "";
+        }
+    }
+
     static {
         contactService = new ContactServiceImpl();
         resourceService = new ResourceServiceImpl();

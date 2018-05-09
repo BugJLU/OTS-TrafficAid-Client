@@ -15,7 +15,7 @@ import org.bugjlu.ots_trafficaid_client.Helper.LoginCallbackHelper;
 import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserService;
 import org.bugjlu.ots_trafficaid_client.remote.remote_service.UserServiceImpl;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends PermissionBaseActivity {
     protected  static UserService userService = new UserServiceImpl();
     @Override
     protected void onCreate(Bundle savedInstanceState){

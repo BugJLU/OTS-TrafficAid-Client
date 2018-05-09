@@ -645,7 +645,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             }
             switch (itemId) {
             case ITEM_TAKE_PICTURE:
-                selectPicFromCamera();
+//                selectPicFromCamera();
                 break;
             case ITEM_PICTURE:
                 selectPicFromLocal();

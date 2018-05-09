@@ -128,6 +128,8 @@
         <activity android:name=".chatuidemo.ui.GroupDetailsActivity" />
         <activity android:name=".chatuidemo.ui.AddContactActivity" />
         <activity android:name=".chatuidemo.ui.UserProfileActivity" />
+        <activity android:name="com.hyphenate.easeui.ui.EaseBaiduMapActivity"/>
+        <activity android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"/>
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.CertifyActivity" />
         <activity android:name=".activity.RescueHistoryActivity" />

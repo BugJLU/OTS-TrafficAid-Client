@@ -19,9 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 
+import org.bugjlu.ots_trafficaid_client.MyApplication;
 import org.bugjlu.ots_trafficaid_client.R;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.Constant;
 import org.bugjlu.ots_trafficaid_client.chatuidemo.DemoHelper;
@@ -37,6 +43,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+
+    public static LocationClient locationClient = null;
+
+    @Override
+    public void permissionCallback() {
+        super.permissionCallback();
+        locationStartListen();
+    }
+
+    public void locationStartListen() {
+        if (locationClient != null) return;
+        SDKInitializer.initialize(getApplicationContext());
+        locationClient = new LocationClient(getApplicationContext());
+        locationClient.registerLocationListener(new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(final BDLocation bdLocation) {
+//                User me = MyService.userService.getUser(MyService.userName);
+//                me.setGeoY(String.valueOf(bdLocation.getLatitude()));
+//                me.setGeoX(String.valueOf(bdLocation.getLongitude()));
+//                Toast.makeText(getApplicationContext(),
+//                        String.valueOf(bdLocation.getLatitude())+","+String.valueOf(bdLocation.getLongitude()),
+//                        Toast.LENGTH_SHORT
+//                ).show();
+                if (MyService.userName != null) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyService.userService.changeLocation(
+                                    MyService.userName,
+                                    String.valueOf(bdLocation.getLongitude()),
+                                    String.valueOf(bdLocation.getLatitude()));
+                        }
+                    }).start();
+                }
+            }
+        });
+        LocationClientOption option = new LocationClientOption();
+        option.setScanSpan(1000);
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIgnoreKillProcess(false);
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setIsNeedAddress(true);
+
+        option.setCoorType("bd09ll");
+        locationClient.setLocOption(option);
+        locationClient.start();
+    }
 
     FloatingActionButton fab;
 
@@ -74,6 +128,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         });
 
         MyService.userName = uid;
+
+//        super.onCreate(savedInstanceState);
+//        locationStartListen();
+
         BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.tab_navigation);
         navigationView.setOnNavigationItemSelectedListener(this);
 
